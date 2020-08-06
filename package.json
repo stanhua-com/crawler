@@ -1,0 +1,35 @@
+{
+  "name": "crawler",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "build": "npm run build-ts && npm run tslint",
+    "build-ts": "tsc",
+    "watch-ts": "tsc -w",
+    "serve": "tsc && node dist/index.js",
+    "tslint": "tslint -c tslint.json -p tsconfig.json",
+    "debug": "npm run build && npm run watch-debug",
+    "serve-debug": "nodemon --inspect dist/index.js",
+    "watch-debug": "concurrently -k -p \"[{name}]\" -n \"TypeScript,Node\" -c \"cyan.bold,green.bold\" \"npm run watch-ts\" \"npm run serve-debug\""
+  },
+  "dependencies": {
+    "request": "^2.88.0",
+    "nodemailer": "^6.4.2",
+    "bull": "^3.16.0"
+  },
+  "devDependencies": {
+    "@types/node": "^12.12.18",
+    "@types/request": "^2.48.3",
+    "@types/nodemailer": "^6.2.2",
+    "@types/bull": "^3.14.0",
+    "concurrently": "^5.0.1",
+    "nodemon": "^2.0.2",
+    "ts-node": "^8.5.4",
+    "tslint": "^5.20.1",
+    "typescript": "3.7.3"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "MIT"
+}
