@@ -2,7 +2,7 @@
   "name": "crawler",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "index.ts",
   "scripts": {
     "build": "npm run build-ts && npm run tslint",
     "build-ts": "tsc",
@@ -14,12 +14,14 @@
     "watch-debug": "concurrently -k -p \"[{name}]\" -n \"TypeScript,Node\" -c \"cyan.bold,green.bold\" \"npm run watch-ts\" \"npm run serve-debug\""
   },
   "dependencies": {
+    "cheerio": "^1.0.0-rc.3",
     "request": "^2.88.0",
     "nodemailer": "^6.4.2",
     "bull": "^3.16.0"
   },
   "devDependencies": {
     "@types/node": "^12.12.18",
+    "@types/cheerio": "^0.22.21",
     "@types/request": "^2.48.3",
     "@types/nodemailer": "^6.2.2",
     "@types/bull": "^3.14.0",
