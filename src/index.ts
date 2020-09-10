@@ -33,5 +33,4 @@ class App {
     fs.writeFileSync('./src/data/proxy.json', JSON.stringify(list))
   }
 }
-
 new App().start()

@@ -6,10 +6,12 @@ import { Response } from 'request'
 
 import { CrawlerOptions } from '../models/request'
 
+import uaList from '../data/ua.json'
+
 export default class CrawlerRequest {
   public request: any = request
   constructor() {
-
+    console.log(uaList)
   }
 
   /**
