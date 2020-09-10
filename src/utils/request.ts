@@ -19,7 +19,6 @@ export default class CrawlerRequest {
   public get(options: CrawlerOptions): Promise<any> {
     return new Promise((resolve, reject) => {
       request.get(options.url, options, (err: any, res: Response, body: any) => {
-        console.log(err)
         if (err) {
           reject({ code: 0, msg: err })
         }

@@ -1,8 +1,12 @@
 // index.ts
 
-import cheerio, { html } from 'cheerio'
+import fs from 'fs'
+import cheerio from 'cheerio'
 
 import CrawlerRequest from './utils/request'
+// /("([^\\\"]*(\\.)?)*")|('([^\\\']*(\\.)?)*')|(\/{2,}.*?(\r|\n))|(\/\*(\n|.)*?\*\/)/g
+// 多行注释:  /(?:^|\n|\r)\s*\/\*[\s\S]*?\*\/\s*(?:\r|\n|$)/g
+// 单行注释:  /(?:^|\n|\r)\s*\/\/.*(?:\r|\n|$)/g
 
 class App {
   constructor() {
@@ -14,7 +18,7 @@ class App {
     for (let i = 1; i < 10; i++) {
       const body: string = await new CrawlerRequest().get({
         url: `https://ip.jiangxianli.com/?page=${i}`,
-        proxy:'http://83.97.23.90:18080'
+        // proxy: 'http://121.69.26.14:8080'
       })
 
       const $: any = cheerio.load(body)
@@ -26,6 +30,7 @@ class App {
       }
     }
     console.log(list)
+    fs.writeFileSync('./src/data/proxy.json', JSON.stringify(list))
   }
 }
 
