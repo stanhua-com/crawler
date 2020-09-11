@@ -4,9 +4,12 @@ import fs from 'fs'
 import cheerio from 'cheerio'
 
 import CrawlerRequest from './utils/request'
+import CrawlerAxios from './utils/axios'
 // /("([^\\\"]*(\\.)?)*")|('([^\\\']*(\\.)?)*')|(\/{2,}.*?(\r|\n))|(\/\*(\n|.)*?\*\/)/g
 // 多行注释:  /(?:^|\n|\r)\s*\/\*[\s\S]*?\*\/\s*(?:\r|\n|$)/g
 // 单行注释:  /(?:^|\n|\r)\s*\/\/.*(?:\r|\n|$)/g
+
+import Proxy from './proxy'
 
 class App {
   constructor() {
@@ -14,23 +17,25 @@ class App {
   }
 
   async start() {
-    let list: Array<string> = new Array()
-    for (let i = 1; i < 10; i++) {
-      const body: string = await new CrawlerRequest().get({
-        url: `https://ip.jiangxianli.com/?page=${i}`,
-        // proxy: 'http://121.69.26.14:8080'
-      })
+    // await new Proxy().start()
+    // const body: any = await new CrawlerRequest().get({
+    //   url: `https://api.ipify.org/?format=jso`,
+    //   proxy: 'http://163.177.151.76:80',
+    //   timeout: 2000,
+    // })
+    // console.log(body)
 
-      const $: any = cheerio.load(body)
-      let $list: any = $('#paginate').prev('.layui-form').children('.layui-table').children('tbody').children('tr')
-      if ($list.length) {
-        $list.each((i: number) => {
-          list.push($list.eq(i).children('td').eq(10).children('button').eq(1).attr('data-url'))
-        })
+    const body: any = await new CrawlerAxios().fetch({
+      url: `http://www.tuling123.com/help/h_cent_webapi.jhtml?nav=doc`,
+      timeout: 2000,
+      proxy: {
+        protocol: 'http',
+        host: '163.177.151.76',
+        port: 80
       }
-    }
-    console.log(list)
-    fs.writeFileSync('./src/data/proxy.json', JSON.stringify(list))
+    })
+    console.log(body)
+
   }
 }
 new App().start()

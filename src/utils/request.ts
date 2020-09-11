@@ -8,10 +8,12 @@ import { CrawlerOptions } from '../models/request'
 
 import uaList from '../data/ua.json'
 
+// https://jsonplaceholder.typicode.com/albums/1
+// https://api.ipify.org/?format=jso
+
 export default class CrawlerRequest {
   public request: any = request
   constructor() {
-    console.log(uaList)
   }
 
   /**
@@ -19,9 +21,20 @@ export default class CrawlerRequest {
    * @param options
    */
   public get(options: CrawlerOptions): Promise<any> {
+
     return new Promise((resolve, reject) => {
-      request.get(options.url, options, (err: any, res: Response, body: any) => {
+      const url: string = options.url
+      if (!url) {
+        reject()
+        return
+      }
+      delete options.url
+
+      options.headers = Object.assign({}, options.headers, { 'User-Agent': uaList[Math.floor(Math.random() * uaList.length)] })
+
+      request.get(url, options, (err: any, res: Response, body: any) => {
         if (err) {
+          console.log(err)
           reject({ code: 0, msg: err })
         }
         else {
@@ -38,7 +51,16 @@ export default class CrawlerRequest {
    */
   public post(options: CrawlerOptions): Promise<any> {
     return new Promise((resolve, reject) => {
-      request.post(options, (err: any, res: Response, body: any) => {
+      const url: string = options.url
+      if (!url) {
+        reject()
+        return
+      }
+      delete options.url
+
+      options.headers = Object.assign({}, options.headers, { 'User-Agent': uaList[Math.floor(Math.random() * uaList.length)] })
+
+      request.post(url, options, (err: any, res: Response, body: any) => {
         if (err) reject({ code: 0, msg: err })
         if (res.statusCode === 200) resolve(body)
         else reject({ code: 10001, msg: res })

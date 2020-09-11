@@ -15,6 +15,7 @@
   },
   "dependencies": {
     "cheerio": "^1.0.0-rc.3",
+    "axios": "^0.20.0",
     "request": "^2.88.0",
     "nodemailer": "^6.4.2",
     "bull": "^3.16.0"
@@ -22,6 +23,7 @@
   "devDependencies": {
     "@types/node": "^12.12.18",
     "@types/cheerio": "^0.22.21",
+    "@types/axios": "^0.14.0",
     "@types/request": "^2.48.3",
     "@types/nodemailer": "^6.2.2",
     "@types/bull": "^3.14.0",
