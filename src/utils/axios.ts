@@ -1,12 +1,17 @@
 // utils/axios.ts
 
 import axios from 'axios'
+import tunnel from 'tunnel'
 
 import { AxiosRequestConfig, AxiosResponse } from 'axios'
 
-import { CrawlerOptions } from '../models/request'
+import { AxiosModel } from '../models/axios'
 
-import uaList from '../data/ua.json'
+import pcUaList from '../data/pcUa.json'
+import mUaList from '../data/mUa.json'
+
+import pHttpList from '../data/pHttp.json'
+import pHttpsList from '../data/pHttps.json'
 
 // https://jsonplaceholder.typicode.com/albums/1
 // https://api.ipify.org/?format=jso
@@ -38,9 +43,52 @@ export default class CrawlerAxios {
   /**
    * 请求
    */
-  fetch(options: AxiosRequestConfig) {
-    options.headers = Object.assign({}, options.headers, { 'User-Agent': uaList[Math.floor(Math.random() * uaList.length)] })
-    console.log(options)
+  fetch(options: AxiosRequestConfig, otherOptions?: AxiosModel) {
+    let count = Math.random()
+    let uaList = pcUaList
+
+    if (otherOptions) {
+      if (otherOptions.device === 'h5')
+        uaList = mUaList
+
+      // 开启代理
+      if (otherOptions.proxy) {
+        options.timeout = 3000
+
+        if (options.url && options.url.toLowerCase().indexOf('https://') > -1) {
+          const proxy: any = pHttpsList[Math.floor(count * pHttpsList.length)]
+          console.log(proxy)
+
+          options.httpsAgent = tunnel.httpsOverHttps({
+            proxy: {
+              host: proxy.ip,
+              port: proxy.port,
+              headers: {
+                'User-Agent': uaList[Math.floor(count * uaList.length)]
+              }
+            }
+          })
+        }
+        else {
+          const proxy: any = pHttpsList[Math.floor(count * pHttpsList.length)]
+
+          console.log(proxy)
+
+          options.httpsAgent = tunnel.httpOverHttps({
+            proxy: {
+              host: proxy.ip,
+              port: proxy.port,
+              headers: {
+                'User-Agent': uaList[Math.floor(count * uaList.length)]
+              }
+            }
+          })
+        }
+      }
+    }
+
+    options.headers = Object.assign({}, options.headers, { 'User-Agent': uaList[Math.floor(count * uaList.length)] })
+
     return axios(options)
   }
 }

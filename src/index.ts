@@ -2,6 +2,7 @@
 
 import fs from 'fs'
 import cheerio from 'cheerio'
+import tunnel from 'tunnel'
 
 import CrawlerRequest from './utils/request'
 import CrawlerAxios from './utils/axios'
@@ -26,16 +27,10 @@ class App {
     // console.log(body)
 
     const body: any = await new CrawlerAxios().fetch({
-      url: `http://www.tuling123.com/help/h_cent_webapi.jhtml?nav=doc`,
-      timeout: 2000,
-      proxy: {
-        protocol: 'http',
-        host: '163.177.151.76',
-        port: 80
-      }
-    })
-    console.log(body)
+      url: `http://jsonplaceholder.typicode.com/albums/1`
+    }, { proxy: true })
 
+    console.log(body)
   }
 }
 new App().start()

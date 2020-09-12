@@ -6,7 +6,7 @@ import { Response } from 'request'
 
 import { CrawlerOptions } from '../models/request'
 
-import uaList from '../data/ua.json'
+import uaList from '../data/mUa.json'
 
 // https://jsonplaceholder.typicode.com/albums/1
 // https://api.ipify.org/?format=jso
