@@ -6,6 +6,7 @@ import tunnel from 'tunnel'
 
 import CrawlerRequest from './utils/request'
 import CrawlerAxios from './utils/axios'
+import CrawlerHttp from './utils/http'
 // /("([^\\\"]*(\\.)?)*")|('([^\\\']*(\\.)?)*')|(\/{2,}.*?(\r|\n))|(\/\*(\n|.)*?\*\/)/g
 // 多行注释:  /(?:^|\n|\r)\s*\/\*[\s\S]*?\*\/\s*(?:\r|\n|$)/g
 // 单行注释:  /(?:^|\n|\r)\s*\/\/.*(?:\r|\n|$)/g
@@ -26,11 +27,17 @@ class App {
     // })
     // console.log(body)
 
-    const body: any = await new CrawlerAxios().fetch({
-      url: `http://jsonplaceholder.typicode.com/albums/1`
-    }, { proxy: true })
+    // const body: any = await new CrawlerAxios().fetch({
+    //   url: `http://jsonplaceholder.typicode.com/albums/1`
+    // }, { proxy: true })
 
+    // console.log(body)
+
+    const body: any = await CrawlerHttp.request({
+      url: `http://jsonplaceholder.typicode.com/albums/1`
+    })
     console.log(body)
   }
 }
+
 new App().start()

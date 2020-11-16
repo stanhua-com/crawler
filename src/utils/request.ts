@@ -25,7 +25,7 @@ export default class CrawlerRequest {
     return new Promise((resolve, reject) => {
       const url: string = options.url
       if (!url) {
-        reject()
+        reject({ code: 10001, msg: 'url Can not be empty' })
         return
       }
       delete options.url
@@ -35,7 +35,7 @@ export default class CrawlerRequest {
       request.get(url, options, (err: any, res: Response, body: any) => {
         if (err) {
           console.log(err)
-          reject({ code: 0, msg: err })
+          reject({ code: 10001, msg: err })
         }
         else {
           if (res.statusCode === 200) resolve(body)

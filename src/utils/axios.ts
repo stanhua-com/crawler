@@ -23,7 +23,7 @@ export default class CrawlerAxios {
     axios.interceptors.request.use((config: AxiosRequestConfig) => {
       config.withCredentials = true
       return config
-    }, (err) => {
+    }, (err: any) => {
       return Promise.reject(err)
     })
 
@@ -33,7 +33,7 @@ export default class CrawlerAxios {
         return res.data
       }
       return Promise.reject(res.data)
-    }, (err) => {
+    }, (err: any) => {
       return Promise.reject(err)
     })
 
@@ -92,3 +92,4 @@ export default class CrawlerAxios {
     return axios(options)
   }
 }
+
